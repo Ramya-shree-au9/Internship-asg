@@ -1,6 +1,7 @@
 import axios from 'axios'
 import React, { Component } from 'react'
 import {Link} from 'react-router-dom'
+import Edit from './editform'
 
 const url='http://localhost:5000/users'
 export class Displayusers extends Component {
@@ -13,8 +14,12 @@ export class Displayusers extends Component {
         this.props.remaining(item.data)
       })
   }
+  editItem=(id)=>{
+
+  }
   
     renderData=({uData})=>{
+      let month = [0,'Jan','Feb','Mar','April','May','June','July','Aug','Sep','Oct','Nav','Dec']
         if(uData){
           console.log(uData)
            return uData.map((item)=>{
@@ -32,10 +37,12 @@ export class Displayusers extends Component {
                               <div><b>Name:</b> {item["Full Name"]}</div>
                     
                             <div><b>Country:</b> {item.Country}</div>
-                            {/* {item["Date of birth"].split('T')[0].split('-')[2] === 1} */}
-                            <div><b>Date of birth:</b> {item["Date of birth"].split('T')[0].split('-')[2]}th  {item["Date of birth"].split('T')[0].split('-')[1]} {item["Date of birth"].split('T')[0].split('-')[0]}</div>
+                            {item["Date of birth"].split('T')[0].split('-')[1] < 10?
+                             <div><b>Date of birth:</b> {item["Date of birth"].split('T')[0].split('-')[2]}th  {month[item["Date of birth"].split('T')[0].split('-')[1].split("")[1]]} {item["Date of birth"].split('T')[0].split('-')[0]}</div>:
+                            <div><b>Date of birth:</b> {item["Date of birth"].split('T')[0].split('-')[2]}th  {month[item["Date of birth"].split('T')[0].split('-')[1]]} {item["Date of birth"].split('T')[0].split('-')[0]}</div>}
                             <div><b>Email:</b> {item.Email}</div>
-                            <button className='btn btn-success'> <Link onClick={this.editItem}>Edit</Link></button>
+                           
+                            <button className='btn btn-success'> <Link to={`/edited/${item.id}`} onClick={()=>{this.editItem(item.id)}}>Edit</Link></button>
                             <button className='btn btn-danger'> <Link onClick={()=>{this.deleteItem(item.id)}}>Delete</Link></button>
                       </div> 
                     </div>
@@ -53,7 +60,7 @@ export class Displayusers extends Component {
     }
   render() {
     return (
-      <div>
+      <div className='detail'>
        {this.renderData(this.props)}
       
       </div>

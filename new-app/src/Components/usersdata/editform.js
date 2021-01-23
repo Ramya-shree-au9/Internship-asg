@@ -1,20 +1,21 @@
+import axios from 'axios'
 import React, { Component } from 'react'
 import './register.scss'
 // import { Link } from 'react-router-dom'
 
 
 const url='http://localhost:5000/users'
-export class SignUp extends Component {
+export class editform extends Component {
     constructor(){
         super()
-        this.state={     
+        this.state={  
+            selectedData:'',   
             Semail:'',
             user:'',
             errorMessage:'',
             error:'',
             country:'',
             date:'',
-            id:80000,
             time:''
         }
     }
@@ -34,13 +35,13 @@ export class SignUp extends Component {
    
    
     renderName=(e)=>{
-           
+        console.log(e.target.value)  
         this.setState({user:e.target.value})  
          
     }
     renderCountry=(e)=>{
-            
-        this.setState({country:e.target.value})       
+        console.log(e.target.value)   
+        this.setState({country:e.target.defaultvalue})       
     }
     renderDateOfBirth=(e)=>{ 
         console.log(e.target.value)     
@@ -52,11 +53,11 @@ export class SignUp extends Component {
     }
 
 
-    submmitSignup=async()=>{ 
+    submmiteditform=()=>{ 
+        console.log(this.state.user,this.state.Semail,this.state.country,this.state.date, this.state.time)
       if(this.state.user && this.state.Semail && this.state.country && this.state.date && this.state.time){
-          this.setState({id:this.state.id + 1})
-        fetch((url),
-        {method:'POST',
+        fetch((`${url}/${this.props.match.params.id}`),
+        {method:'PATCH',
         headers:{
             'Accept':'application/json',
             'Content-Type':'application/json'    
@@ -64,66 +65,76 @@ export class SignUp extends Component {
         body:JSON.stringify({
             "Full Name": this.state.user,
             "Country":this.state.country,
-            "id":this.state.id + 1 ,
             "Date of birth": `${this.state.date}T${this.state.time}.000Z`,
             "Email": this.state.Semail,
             "Created at":new Date().toISOString()
         })
     })
     this.props.history.push('/')
-    }
-                
+    }          
         else{ 
           this.setState({error:'Fill all credentials'}) 
         } 
     }
+
    
   render() {
+      console.log(this.state.selectedData)
+     
     return (
         <React.Fragment>
-        <div className="registration-form">
+              <div className="registration-form">
         <form>
             <div className="form-icon">
                 <span><i className="glyphicon glyphicon-user"></i></span>
             </div>
             <div className="form-group">
-                <input type="text" className="form-control item" value={this.state.user} onChange={this.renderName} id="username" placeholder="Username"/>
+            <label>Name:</label> <input type="text" className="form-data" defaultValue={this.state.selectedData["Full Name"]} onChange={this.renderName} id="username" />
+                
             </div>
             <div className="form-group">
-                <input type="text" className="form-control item"  onChange={this.renderCountry} id="country" placeholder="country"/>
+            <label>Country:</label>  <input type="text" className="form-data" defaultValue={this.state.selectedData.Country}  onChange={this.renderCountry} id="country" placeholder="country"/>
+               
             </div>
             <div className="form-group">
                 <label>Date of Birth:</label>
                 <div className='row'>
-                    <div className='col-md-6'><input type="date" className="form-control item"  onChange={this.renderDateOfBirth} id="date" /></div>
+                    
+                    <div className='col-md-6'><input type="date"  className="form-control item"  onChange={this.renderDateOfBirth} id="date" /></div>
                     <div className='col-md-6'><input type="time" className="form-control item"  onChange={this.renderTime} id="time" /></div>
-                </div>
-                
-                
+                </div>     
             </div>
           
           
             <div className="form-group">
-                <input type="text" className="form-control item"  onChange={this.renderSemail} id="email" placeholder="Email"/>
+            <label>Email: </label> <input type="text" className="form-data" defaultValue={this.state.selectedData.Email}  onChange={this.renderSemail} id="email" placeholder="Email"/>
             </div>
             
             <span className='error'>{this.state.errorMessage}</span>
           
            <div> <span className='error'>{this.state.error}</span></div>
             <div className="form-group">
-                <button type="button" className="btn btn-block create-account" onClick={this.submmitSignup} >Register Here</button>
+                <button type="button" className="btn btn-block create-account" onClick={this.submmiteditform} >Update</button>
             </div>
            
         </form>
       
     </div>
+        
     
     </React.Fragment>
     )
+    
+  }
+  componentDidMount(){
+      axios.get(`${url}/${this.props.match.params.id}`)
+      .then((item)=>{
+          this.setState({selectedData:item.data,user:item.data["Full Name"],country:item.data.Country,Semail:item.data.Email})
+      })
   }
 }
 
 
-export default SignUp
+export default editform
 
 

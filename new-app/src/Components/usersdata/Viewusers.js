@@ -95,13 +95,11 @@ export class viewusers extends Component {
   render() {
       console.log(this.state.filtered)
     return (
-      <div>
+      <div className='contents'>
         {this.sort()}
-       
-        
         <div className='row header'>
         
-          <div className='col-md-2 main' onClick={this.renderAllData}><Link><h3>All users</h3></Link></div>
+         <center> <div className='col-md-2 main' onClick={this.renderAllData}><Link><h3>All users</h3></Link></div>
           <div className='filter col-md-5'>
             <select onChange={this.selectedCountry} className='country'>
               <option >---select by country---</option>
@@ -129,8 +127,9 @@ export class viewusers extends Component {
             <div className='col-md-1 register'>
               <Link to='/register' style={{color:'white'}}>Register</Link>
               </div>
+              </center>
         </div>
-        {/* </nav> */}
+        
         <Display uData={this.state.filtered} remaining={(value)=>this.remainingData(value)}/>
         
     </div>
