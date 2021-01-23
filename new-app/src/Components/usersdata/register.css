@@ -1,11 +1,10 @@
 .registration-form {
-  background-color: whitesmoke;
   padding: 3% 0;
 }
 
 .registration-form form {
   background-color: #fff;
-  max-width: 400px;
+  max-width: 440px;
   margin: auto;
   padding: 3% 5%;
   border-top-left-radius: 30px;
@@ -65,22 +64,5 @@
     font-size: 30px;
     line-height: 70px;
   }
-}
-
-.hr {
-  height: 2px;
-  margin: 8% 0;
-  background: rgba(0, 0, 0, 0.445);
-}
-
-.foot {
-  text-align: center;
-  font-size: 120%;
-  color: chocolate;
-}
-
-.loginlink {
-  text-align: center;
-  font-size: 160%;
 }
 /*# sourceMappingURL=register.css.map */

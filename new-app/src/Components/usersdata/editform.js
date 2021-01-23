@@ -41,7 +41,7 @@ export class editform extends Component {
     }
     renderCountry=(e)=>{
         console.log(e.target.value)   
-        this.setState({country:e.target.defaultvalue})       
+        this.setState({country:e.target.value})       
     }
     renderDateOfBirth=(e)=>{ 
         console.log(e.target.value)     
