@@ -23,7 +23,7 @@ const App=()=>{
             setPosts(res.data);
             setLoading(false)
             setUpdate(false)
-            sessionStorage.setItem("lastdata",res.data)
+            localStorage.setItem("lastId",res.data[res.data.length-1].Id)
         }
         fetchPosts()
     },[update])
@@ -39,13 +39,14 @@ const App=()=>{
       setActivePage(pageNumber); 
       // setUpdate(true) 
     }
-   
+  
+    // console.log(posts[(posts.length-1)].Id)
     return(
         <div className='contents'>
          
-            <Header posts={currentPosts} filter={(data)=>{setFilterData(data)}} updates={(data)=>setUpdate(data)}/>
+            <Header posts={currentPosts} alldata={posts} filter={(data)=>{setFilterData(data)}} />
            
-            <Display posts={filteredData || currentPosts} loading={loading}/>
+            <Display posts={filteredData || currentPosts}  loading={loading} updates={(data)=>{setUpdate(data)}}/>
             <div className='pagecontent'>
             {filteredData?<div></div>:
             

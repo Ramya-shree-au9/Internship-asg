@@ -5,20 +5,14 @@ import {Link} from 'react-router-dom'
 
 const url='http://localhost:5000/users'
 const Displayusers =({posts,loading,updates})=>{
+  // console.log(updates)
   const deleteItem=(Id)=>{
     console.log(Id)
-    axios.delete(`${url}/${Id}`)
+    axios.delete(`${url}/${Id}`) 
+    updates(true)
     
-    const datas=()=>updates('true')
-    // axios.get(url)
-    //   .then((item)=>{
-    //     {()=>updates(item.data)}
-    //   })
   }
 
-  // const editItem=(id)=>{
-  //   <Edit idno={id}/>
-  // }
   const month = [0,'Jan','Feb','Mar','April','May','June','July','Aug','Sep','Oct','Nav','Dec']
  
   if(loading){
@@ -28,6 +22,7 @@ const Displayusers =({posts,loading,updates})=>{
     return(
     <div>
        {posts.map((item)=>{
+         
                 return(
                   <div class="content">
                   <div class="col-xs-12 col-sm-12 col-md-6">
@@ -47,7 +42,7 @@ const Displayusers =({posts,loading,updates})=>{
                             <div><b>Date of birth:</b> {item["Date of birth"].split('T')[0].split('-')[2]}th  {month[item["Date of birth"].split('T')[0].split('-')[1]]} {item["Date of birth"].split('T')[0].split('-')[0]}</div>}
                             <div><b>Email:</b> {item.Email}</div>
                            
-                            <button className='btn btn-success'> <Link to={`/edited/${item.Id}`} onClick={()=>{this.editItem(item.Id)}}>Edit</Link></button>
+                            <button className='btn btn-success'> <Link to={`/edited/${item.Id}`} >Edit</Link></button>
                             <button className='btn btn-danger'> <Link onClick={()=>{deleteItem(item.Id)}}>Delete</Link></button>
                       </div> 
                     </div>

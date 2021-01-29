@@ -1,9 +1,10 @@
+import axios from 'axios'
 import React, { useState} from 'react'
 import './register.scss'
 
 
 const url='http://localhost:5000/users'
-const RegisterForm=()=>{
+const RegisterForm=(props)=>{
     const [email,setEmail]= useState()
     const [user,setUser]=useState()
     const [errorMessage,setErrorMessage] = useState()
@@ -11,8 +12,6 @@ const RegisterForm=()=>{
     const [country,setCountry] = useState()
     const [date,setDate] = useState()
     const [time,setTime] = useState()
-    const [id,setId] = useState(80000)
-
 
     const renderSemail=(e)=>{
         if ((/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i).test(e.target.value)) {
@@ -47,23 +46,17 @@ const RegisterForm=()=>{
   
     const  submmitSignup=async()=>{ 
         if(user && email && country && date && time){
-            setId(id + 1)
-          fetch((url),
-          {method:'POST',
-          headers:{
-              'Accept':'application/json',
-              'Content-Type':'application/json'    
-          },
-          body:JSON.stringify({
-              "Full Name": user,
+         const Id = 1+ +(localStorage.getItem("lastId"))
+            axios.post((url),{
+                "Full Name": user,
               "Country":country,
-              "Id":id + 1 ,
+              "Id":Id ,
               "Date of birth": `${date}T${time}.000Z`,
               "Email": email,
               "Created at":new Date().toISOString()
-          })
-      })
-      this.props.history.push('/')
+            })
+    
+      props.history.push('/')
       }
                   
           else{ 

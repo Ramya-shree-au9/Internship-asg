@@ -1,26 +1,14 @@
-import React,{useState} from 'react'
+import React from 'react'
 import {ReactSearchAutocomplete } from 'react-search-autocomplete'
 import {Link} from 'react-router-dom'
-import Display from './Displayusers'
 
-const Header = ({posts,filter}) => {
-    const [loading] = useState(false)
-
-     const [filteredData,setFilterData]=useState()
-
-    // const renderAllData=()=>{
-
-    //     setState({filtered:posts})
-    //   }
-
-      
+const Header = ({posts,filter,alldata}) => {
         const handleOnSelect = (item) => {
           let a = []
           a.push(item)
           filter(a)
         }
 
-  
         const selectedCountry=(e)=>{
           const output = posts.filter((data)=>{
             return ((data.Country) === (e.target.value))})   
@@ -92,7 +80,7 @@ const Header = ({posts,filter}) => {
           <div className='col-md-4'>
               <div class='searchbar' >
               <ReactSearchAutocomplete 
-                items={posts}
+                items={alldata}
                 fuseOptions={{ keys: [ "Full Name","Country", "Date of birth", "Email","Created at"] }}           
                 resultStringKeyName="Full Name"
                 // onSearch={handleOnSearch}

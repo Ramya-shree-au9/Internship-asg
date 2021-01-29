@@ -1,10 +1,10 @@
 import React, { useState,useEffect } from 'react'
 import axios from 'axios'
 import './register.scss'
-// import './'
+
 
 const url='http://localhost:5000/users'
-const Editform=()=>{
+const Editform=(props)=>{
     const [selectedData,setSelectedData]= useState([])
     const [email,setEmail]= useState()
     const [user,setUser]=useState()
@@ -14,17 +14,17 @@ const Editform=()=>{
     const [date,setDate] = useState()
     const [time,setTime] = useState()
 
-     // setState({selectedData:item.data,user:item.data["Full Name"],country:item.data.Country,Semail:item.data.Email})
+    
      useEffect(()=>{
         const fetchPosts=async()=>{
-            const res = await axios.get(`${url}/${this.props.match.params.id}`)
+            const res = await axios.get(`${url}/${props.match.params.id}`)
             setSelectedData(res.data);
             setUser(res.data["Full Name"])
             setCountry(res.data.Country)
             setEmail(res.data.Email)
         }
         fetchPosts()
-    },[])  
+    }, [])  
 
     const renderSemail=(e)=>{
         if ((/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i).test(e.target.value)) {
@@ -58,30 +58,29 @@ const Editform=()=>{
   
   
       const submmiteditform=()=>{ 
-          // console.log(user,Semail,country,date, time)
+          console.log(user,email,country,date, time)
         if(user && email && country && date && time){
-          fetch((`${url}/${this.props.match.params.id}`),
-          {method:'PATCH',
-          headers:{
-              'Accept':'Editformlication/json',
-              'Content-Type':'Editformlication/json'    
-          },
-          body:JSON.stringify({
-              "Full Name": user,
-              "Country":country,
-              "Date of birth": `${date}T${time}.000Z`,
-              "Email": email,
-              "Created at":new Date().toISOString()
-          })
-      })
-      this.props.history.push('/')
+            axios.patch(`${url}/${props.match.params.id}`,{
+                
+                    "Full Name": user,
+                    "Country":country,
+                    "Date of birth": `${date}T${time}.000Z`,
+                    "Email": email,
+                    "Created at":new Date().toISOString()
+               
+            }).then((res)=>{
+                console.log(res.data)
+            }).catch(err=>{
+                console.log('errr')
+            })
+      props.history.push('/')
       }          
           else{ 
             setError('Fill all credentials') 
           } 
       }
   
-        console.log(selectedData)
+        console.log(props)
     return (
         <React.Fragment>
               <div className="registration-form">
