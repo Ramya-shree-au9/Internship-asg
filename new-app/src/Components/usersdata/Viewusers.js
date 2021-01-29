@@ -47,7 +47,7 @@ const App=()=>{
     return(
      
       <React.Fragment>
-        {posts.length > 400?
+        {posts.length > 50?
         <div className='contents'>
          
             <Header posts={currentPosts} alldata={posts} filter={(data)=>{setFilterData(data)}} />
