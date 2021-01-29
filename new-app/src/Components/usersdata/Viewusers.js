@@ -12,7 +12,6 @@ import Loader from 'react-loader-spinner'
 const App=()=>{
     const [posts,setPosts] =useState([])
     const [loading,setLoading] = useState(false)
-    // const [currentPage,setCurrentpage] = useState(1)
     const [postPerPage] = useState(500);
     const [activePage,setActivePage] = useState(8)
     const [filteredData,setFilterData]=useState()
@@ -35,15 +34,15 @@ const App=()=>{
     const indexOfFirstPost = indexOfLastPost - postPerPage
     const currentPosts = posts.slice(indexOfFirstPost,indexOfLastPost)
 
-    // const paginate = (pageNumber)=>setCurrentpage(pageNumber)
+    
    
     const handlePageChange=(pageNumber)=> {
       console.log(`active page is ${pageNumber}`);
       setActivePage(pageNumber); 
-      // setUpdate(true) 
+      
     }
   
-    // console.log(posts[(posts.length-1)].Id)
+ 
     return(
      
       <React.Fragment>
