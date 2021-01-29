@@ -24,7 +24,7 @@ const Editform=(props)=>{
             setEmail(res.data.Email)
         }
         fetchPosts()
-    }, [])  
+    },[])  
 
     const renderSemail=(e)=>{
         if ((/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i).test(e.target.value)) {
@@ -73,6 +73,7 @@ const Editform=(props)=>{
             }).catch(err=>{
                 console.log('errr')
             })
+            sessionStorage.setItem('update',true)
       props.history.push('/')
       }          
           else{ 

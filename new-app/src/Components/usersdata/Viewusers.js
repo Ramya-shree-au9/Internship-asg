@@ -4,17 +4,20 @@ import './display.scss'
 import Display from './Displayusers'
 import Header from './Header'
 import Pagination from "react-js-pagination";
-// import './'
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
+import Loader from 'react-loader-spinner'
+
 
 
 const App=()=>{
     const [posts,setPosts] =useState([])
     const [loading,setLoading] = useState(false)
     // const [currentPage,setCurrentpage] = useState(1)
-    const [postPerPage] = useState(100);
+    const [postPerPage] = useState(500);
     const [activePage,setActivePage] = useState(8)
     const [filteredData,setFilterData]=useState()
-    const [update,setUpdate]=useState(false)
+    sessionStorage.setItem('update',false)
+    const [update,setUpdate]=useState(sessionStorage.getItem('update'))
 
     useEffect(()=>{
         const fetchPosts=async()=>{
@@ -42,6 +45,9 @@ const App=()=>{
   
     // console.log(posts[(posts.length-1)].Id)
     return(
+     
+      <React.Fragment>
+        {posts.length > 400?
         <div className='contents'>
          
             <Header posts={currentPosts} alldata={posts} filter={(data)=>{setFilterData(data)}} />
@@ -63,7 +69,16 @@ const App=()=>{
             }
         
       </div>
-      </div>
+      </div>:
+      <center><Loader
+            type="Grid"
+            color="red"
+            height={100}
+            width={100}
+            timeout={3000} //3 secs
+
+        /></center>}
+      </React.Fragment>
         
     )
 }

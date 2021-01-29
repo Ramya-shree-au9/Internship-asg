@@ -1,11 +1,9 @@
 import axios from 'axios'
 import React from 'react'
 import {Link} from 'react-router-dom'
-// import Edit from './editform'
 
 const url='http://localhost:5000/users'
-const Displayusers =({posts,loading,updates})=>{
-  // console.log(updates)
+const Displayusers =({posts,updates})=>{
   const deleteItem=(Id)=>{
     console.log(Id)
     axios.delete(`${url}/${Id}`) 
@@ -14,10 +12,7 @@ const Displayusers =({posts,loading,updates})=>{
   }
 
   const month = [0,'Jan','Feb','Mar','April','May','June','July','Aug','Sep','Oct','Nav','Dec']
- 
-  if(loading){
-    return <h2>loading...</h2>
-  }
+
   if(posts){ 
     return(
     <div>

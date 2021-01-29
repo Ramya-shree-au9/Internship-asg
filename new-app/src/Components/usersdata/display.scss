@@ -1,5 +1,11 @@
 body{
-    background-color:rgba(165, 42, 42, 0.425);
+    background-color:burlywood;
+}
+
+%message{
+        height:40px;
+        border-radius: 8px;
+        font-size: 110%;
 }
 .contents{
     // background-color: rgba(0, 0, 0, 0.842);
@@ -48,33 +54,37 @@ body{
     .searchbar{
         position: relative;
         z-index: 1;
-        width: 95%;
-        background-color: rgba(255, 255, 255, 0.164);
+        width: 80%;
         margin: 8% 0 2% 0;
+        height: 30px;
+    }
+    select{
+        background-color: lightyellow;
     }
 
     .main{
-        margin:2% 0 0 0 ;
-        padding-left: 2%;
-        color: white;
+        margin:2.7% 0 ;
+        width: 10%;
+        padding: .5% 0;
+        
+    }
+    Link{
+        text-decoration: none;
+        color: cornsilk;
     }
     .filter{
         text-align: center;
         margin-top: 3%;
+        
     }
 
     .country{
-        width:220px;
-        height:40px;
-        border-radius: 0%;
-        font-size: 20px;
-        
+        @extend %message;
+        width:200px;    
     }
     .date{
-        width:250px;
-        height:40px;
-        border-radius:0%;
-        font-size: 20px;
+        @extend %message;
+        width:230px;
         margin-left:5px
     }
 

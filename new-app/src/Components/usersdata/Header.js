@@ -66,14 +66,14 @@ const Header = ({posts,filter,alldata}) => {
     <div className='row header'>
         
          <center> 
-             {/* <div className='col-md-2 main' onClick={renderAllData}><Link><h3>All users</h3></Link></div> */}
+             {/* <button className='col-md-1 main btn btn-warning'><Link to='/'>All users</Link></button> */}
           <div className='filter col-md-6'>
             <select onChange={selectedCountry} className='country'>
-              <option >---select by country---</option>
+              <option >---Select by country---</option>
               {renderCountry()}
             </select>
             <select onChange={selectedDate}  className='date'>
-              <option>---select by Date of birth---</option>
+              <option>---Select by Date of birth---</option>
               {renderDateOfBirth()}
             </select>
           </div>
@@ -91,12 +91,12 @@ const Header = ({posts,filter,alldata}) => {
               />          
             </div>
             </div>
-            <div className='col-md-2 register'>
-              <Link to='/register' style={{color:'white'}}>Register</Link>
-              </div>
+            <button className='col-md-2 main btn btn-success'><Link to='/register'>Register</Link></button>
+             
+              
               </center>
         </div>
-        {/* <Display posts={filteredData} loading={loading}/> */}
+       
         </div>
   )
 }
