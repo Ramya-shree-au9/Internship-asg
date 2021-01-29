@@ -1,28 +1,33 @@
 import axios from 'axios'
-import React, { Component } from 'react'
+import React from 'react'
 import {Link} from 'react-router-dom'
-import Edit from './editform'
+// import Edit from './editform'
 
 const url='http://localhost:5000/users'
-export class Displayusers extends Component {
-
-  deleteItem=(id)=>{
-    console.log(id)
-    axios.delete(`${url}/${id}`)
-    axios.get(url)
-      .then((item)=>{
-        this.props.remaining(item.data)
-      })
+const Displayusers =({posts,loading,updates})=>{
+  const deleteItem=(Id)=>{
+    console.log(Id)
+    axios.delete(`${url}/${Id}`)
+    
+    const datas=()=>updates('true')
+    // axios.get(url)
+    //   .then((item)=>{
+    //     {()=>updates(item.data)}
+    //   })
   }
-  editItem=(id)=>{
 
+  // const editItem=(id)=>{
+  //   <Edit idno={id}/>
+  // }
+  const month = [0,'Jan','Feb','Mar','April','May','June','July','Aug','Sep','Oct','Nav','Dec']
+ 
+  if(loading){
+    return <h2>loading...</h2>
   }
-  
-    renderData=({uData})=>{
-      let month = [0,'Jan','Feb','Mar','April','May','June','July','Aug','Sep','Oct','Nav','Dec']
-        if(uData){
-          console.log(uData)
-           return uData.map((item)=>{
+  if(posts){ 
+    return(
+    <div>
+       {posts.map((item)=>{
                 return(
                   <div class="content">
                   <div class="col-xs-12 col-sm-12 col-md-6">
@@ -33,7 +38,7 @@ export class Displayusers extends Component {
                           <div className='col-md-4'><i class="usericon glyphicon glyphicon-user"></i></div>
                           <div className='col-md-8'>
                             
-                          <div key={item.id}>
+                          <div key={item.Id}>
                               <div><b>Name:</b> {item["Full Name"]}</div>
                     
                             <div><b>Country:</b> {item.Country}</div>
@@ -42,8 +47,8 @@ export class Displayusers extends Component {
                             <div><b>Date of birth:</b> {item["Date of birth"].split('T')[0].split('-')[2]}th  {month[item["Date of birth"].split('T')[0].split('-')[1]]} {item["Date of birth"].split('T')[0].split('-')[0]}</div>}
                             <div><b>Email:</b> {item.Email}</div>
                            
-                            <button className='btn btn-success'> <Link to={`/edited/${item.id}`} onClick={()=>{this.editItem(item.id)}}>Edit</Link></button>
-                            <button className='btn btn-danger'> <Link onClick={()=>{this.deleteItem(item.id)}}>Delete</Link></button>
+                            <button className='btn btn-success'> <Link to={`/edited/${item.Id}`} onClick={()=>{this.editItem(item.Id)}}>Edit</Link></button>
+                            <button className='btn btn-danger'> <Link onClick={()=>{deleteItem(item.Id)}}>Delete</Link></button>
                       </div> 
                     </div>
                 </div>
@@ -55,17 +60,11 @@ export class Displayusers extends Component {
         
                   
                 )
-            })
-        }
-    }
-  render() {
-    return (
-      <div className='detail'>
-       {this.renderData(this.props)}
-      
-      </div>
-    )
-  }
+            })}
+       
+    </div>
+  )}
 }
 
 export default Displayusers
+

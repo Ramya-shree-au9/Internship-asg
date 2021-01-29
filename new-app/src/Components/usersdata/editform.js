@@ -1,86 +1,87 @@
+import React, { useState,useEffect } from 'react'
 import axios from 'axios'
-import React, { Component } from 'react'
 import './register.scss'
-// import { Link } from 'react-router-dom'
-
+// import './'
 
 const url='http://localhost:5000/users'
-export class editform extends Component {
-    constructor(){
-        super()
-        this.state={  
-            selectedData:'',   
-            Semail:'',
-            user:'',
-            errorMessage:'',
-            error:'',
-            country:'',
-            date:'',
-            time:''
+const Editform=()=>{
+    const [selectedData,setSelectedData]= useState([])
+    const [email,setEmail]= useState()
+    const [user,setUser]=useState()
+    const [errorMessage,setErrorMessage] = useState()
+    const [error,setError] = useState()
+    const [country,setCountry] = useState()
+    const [date,setDate] = useState()
+    const [time,setTime] = useState()
+
+     // setState({selectedData:item.data,user:item.data["Full Name"],country:item.data.Country,Semail:item.data.Email})
+     useEffect(()=>{
+        const fetchPosts=async()=>{
+            const res = await axios.get(`${url}/${this.props.match.params.id}`)
+            setSelectedData(res.data);
+            setUser(res.data["Full Name"])
+            setCountry(res.data.Country)
+            setEmail(res.data.Email)
         }
-    }
-   
-   
-    renderSemail=(e)=>{
-      if ((/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i).test(e.target.value)) {
-        this.setState({validation: true})
-        this.setState({Semail:e.target.value})
-        this.setState({errorMessage: ''})
-        this.setState({chkbox:false}) 
-      } else {
-        this.setState({validation: false});
-        this.setState({errorMessage: 'Please enter correct email adress'})
-      }   
-    }
-   
-   
-    renderName=(e)=>{
-        console.log(e.target.value)  
-        this.setState({user:e.target.value})  
+        fetchPosts()
+    },[])  
+
+    const renderSemail=(e)=>{
+        if ((/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i).test(e.target.value)) {
+          
+          setEmail(e.target.value)
+          setErrorMessage('') 
          
-    }
-    renderCountry=(e)=>{
-        console.log(e.target.value)   
-        this.setState({country:e.target.value})       
-    }
-    renderDateOfBirth=(e)=>{ 
-        console.log(e.target.value)     
-        this.setState({date:e.target.value})       
-    }
-    renderTime=(e)=>{  
-        console.log(e.target.value)    
-        this.setState({time:e.target.value})       
-    }
-
-
-    submmiteditform=()=>{ 
-        console.log(this.state.user,this.state.Semail,this.state.country,this.state.date, this.state.time)
-      if(this.state.user && this.state.Semail && this.state.country && this.state.date && this.state.time){
-        fetch((`${url}/${this.props.match.params.id}`),
-        {method:'PATCH',
-        headers:{
-            'Accept':'application/json',
-            'Content-Type':'application/json'    
-        },
-        body:JSON.stringify({
-            "Full Name": this.state.user,
-            "Country":this.state.country,
-            "Date of birth": `${this.state.date}T${this.state.time}.000Z`,
-            "Email": this.state.Semail,
-            "Created at":new Date().toISOString()
-        })
-    })
-    this.props.history.push('/')
-    }          
-        else{ 
-          this.setState({error:'Fill all credentials'}) 
-        } 
-    }
-
-   
-  render() {
-      console.log(this.state.selectedData)
+        } else {
+          setErrorMessage('Please enter correct email adress')
+        }   
+      }
      
+     
+      const renderName=(e)=>{
+          console.log(e.target.value)  
+          setUser(e.target.value)  
+           
+      }
+      const renderCountry=(e)=>{
+          console.log(e.target.value)   
+          setCountry(e.target.value)       
+      }
+      const renderDateOfBirth=(e)=>{ 
+          console.log(e.target.value)     
+          setDate(e.target.value)       
+      }
+      const renderTime=(e)=>{  
+          console.log(e.target.value)    
+          setTime(e.target.value)       
+      }
+  
+  
+      const submmiteditform=()=>{ 
+          // console.log(user,Semail,country,date, time)
+        if(user && email && country && date && time){
+          fetch((`${url}/${this.props.match.params.id}`),
+          {method:'PATCH',
+          headers:{
+              'Accept':'Editformlication/json',
+              'Content-Type':'Editformlication/json'    
+          },
+          body:JSON.stringify({
+              "Full Name": user,
+              "Country":country,
+              "Date of birth": `${date}T${time}.000Z`,
+              "Email": email,
+              "Created at":new Date().toISOString()
+          })
+      })
+      this.props.history.push('/')
+      }          
+          else{ 
+            setError('Fill all credentials') 
+          } 
+      }
+  
+        console.log(selectedData)
     return (
         <React.Fragment>
               <div className="registration-form">
@@ -89,32 +90,32 @@ export class editform extends Component {
                 <span><i className="glyphicon glyphicon-user"></i></span>
             </div>
             <div className="form-group">
-            <label>Name:</label> <input type="text" className="form-data" defaultValue={this.state.selectedData["Full Name"]} onChange={this.renderName} id="username" />
+            <label>Name:</label> <input type="text" className="form-data" defaultValue={selectedData["Full Name"]} onChange={renderName} id="username" />
                 
             </div>
             <div className="form-group">
-            <label>Country:</label>  <input type="text" className="form-data" defaultValue={this.state.selectedData.Country}  onChange={this.renderCountry} id="country" placeholder="country"/>
+            <label>Country:</label>  <input type="text" className="form-data" defaultValue={selectedData.Country}  onChange={renderCountry} id="country" placeholder="country"/>
                
             </div>
             <div className="form-group">
                 <label>Date of Birth:</label>
                 <div className='row'>
                     
-                    <div className='col-md-6'><input type="date"  className="form-control item"  onChange={this.renderDateOfBirth} id="date" /></div>
-                    <div className='col-md-6'><input type="time" className="form-control item"  onChange={this.renderTime} id="time" /></div>
+                    <div className='col-md-6'><input type="date"  className="form-control item"  onChange={renderDateOfBirth} id="date" /></div>
+                    <div className='col-md-6'><input type="time" className="form-control item"  onChange={renderTime} id="time" /></div>
                 </div>     
             </div>
           
           
             <div className="form-group">
-            <label>Email: </label> <input type="text" className="form-data" defaultValue={this.state.selectedData.Email}  onChange={this.renderSemail} id="email" placeholder="Email"/>
+            <label>Email: </label> <input type="text" className="form-data" defaultValue={selectedData.Email}  onChange={renderSemail} id="email" placeholder="Email"/>
             </div>
             
-            <span className='error'>{this.state.errorMessage}</span>
+            <span className='error'>{errorMessage}</span>
           
-           <div> <span className='error'>{this.state.error}</span></div>
+           <div> <span className='error'>{error}</span></div>
             <div className="form-group">
-                <button type="button" className="btn btn-block create-account" onClick={this.submmiteditform} >Update</button>
+                <button type="button" className="btn btn-block create-account" onClick={submmiteditform} >Update</button>
             </div>
            
         </form>
@@ -124,17 +125,17 @@ export class editform extends Component {
     
     </React.Fragment>
     )
-    
-  }
-  componentDidMount(){
-      axios.get(`${url}/${this.props.match.params.id}`)
-      .then((item)=>{
-          this.setState({selectedData:item.data,user:item.data["Full Name"],country:item.data.Country,Semail:item.data.Email})
-      })
-  }
 }
 
+export default Editform
 
-export default editform
+
+
+
+
+
+
+  
+   
 
 

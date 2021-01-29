@@ -1,5 +1,5 @@
 body {
-  background-color: rgba(0, 0, 0, 0.719);
+  background-color: rgba(165, 42, 42, 0.425);
 }
 
 .contents .content {
@@ -58,7 +58,7 @@ body {
 
 .contents .main {
   margin: 2% 0 0 0;
-  padding-left: 5%;
+  padding-left: 2%;
   color: white;
 }
 

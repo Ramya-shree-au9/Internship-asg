@@ -3,8 +3,11 @@ body{
 }
 .contents{
     // background-color: rgba(0, 0, 0, 0.842);
+    .pagecontent{
+        margin: auto;
+    }
 .content{
-    margin:6% 5%;
+    margin:4% 5%;
     // background-color: orangered;
     
     .card{
