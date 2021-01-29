@@ -10,7 +10,7 @@ import Loader from 'react-loader-spinner'
 const App=(props)=>{
     const [posts,setPosts] =useState([])
     const [postPerPage] = useState(500);
-    const [activePage,setActivePage] = useState(8)
+    const [activePage,setActivePage] = useState(9)
     const [filteredData,setFilterData]=useState()
     sessionStorage.setItem('update',false)
     const [update,setUpdate]=useState(sessionStorage.getItem('update'))
@@ -37,11 +37,11 @@ const App=(props)=>{
       // setUpdate(true) 
     }
   
-    // console.log(posts[(posts.length-1)].Id)
+    // console.log(filteredData)
     return(
      
       <React.Fragment>
-        {posts.length > 10?
+        {posts.length > 1?
         <div className='contents'>
          
             <Header posts={currentPosts} alldata={posts}  history={props.history} filter={(data)=>{setFilterData(data)}} />
@@ -55,7 +55,7 @@ const App=(props)=>{
               activePage={activePage}
               itemsCountPerPage={postPerPage}
               totalItemsCount={posts.length}
-              pageRangeDisplayed={11}
+              pageRangeDisplayed={15}
               onChange={handlePageChange}
             
             /></center>

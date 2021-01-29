@@ -1,5 +1,6 @@
 import React from 'react'
 import {ReactSearchAutocomplete } from 'react-search-autocomplete'
+// import { Multiselect } from 'multiselect-react-dropdown'
 
 const Header = ({posts,filter,alldata,history}) => {
         const handleOnSelect = (item) => {
@@ -62,6 +63,17 @@ const Header = ({posts,filter,alldata,history}) => {
     const registerrender=()=>{
         history.push('/regiEdit/:id')
     }
+
+  //   const onSelect=(selectedList, selectedItem)=> {
+  //     const OP = selectedList
+  //     filter(OP)
+  //     console.log(selectedList)   
+  // }
+  
+  // const onRemove=(selectedList, removedItem)=> {
+  //   filter(selectedList)
+  //   console.log(selectedList)
+  // }
   return (
       <div>
     <div className='row header'>
@@ -69,6 +81,13 @@ const Header = ({posts,filter,alldata,history}) => {
          <center> 
              {/* <button className='col-md-1 main btn btn-warning'><Link to='/'>All users</Link></button> */}
           <div className='filter col-md-6'>
+          {/* <Multiselect
+              options={alldata} // Options to display in the dropdown
+              // selectedValues={selectedValue} // Preselected value to persist in dropdown
+              onSelect={onSelect} // Function will trigger on select event
+              onRemove={onRemove} // Function will trigger on remove event
+              displayValue="Country" // Property name to display in the dropdown options
+              /> */}
             <select onChange={selectedCountry} className='country'>
               <option >---Select by country---</option>
               {renderCountry()}

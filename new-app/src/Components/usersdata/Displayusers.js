@@ -57,7 +57,7 @@ const Displayusers =({posts,updates,history})=>{
                             <div className='detail'><b>Country:</b> {item.Country}</div>
                             <div><b>Date of birth:</b>{dateformatrender(item["Date of birth"].split('T')[0])}</div>
                             
-                            <div className='detail'><b>Email:</b> {item.Email}</div>
+                            <div className='emaildetail'><b>Email:</b> {item.Email}</div>
                            
                             <button  className='btn btn-success detail' onClick={()=>{editItem(item.Id)}}> Edit</button>
                             <button className='btn btn-danger detail' onClick={()=>{deleteItem(item.Id)}}>Delete</button>

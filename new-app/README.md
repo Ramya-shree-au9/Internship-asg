@@ -2,6 +2,7 @@ npm i axios,react-router-dom
 npm i node-sass@4.14.1
 npm install react-search-autocomplete
 npm i axios react-router-dom node-sass@4.14.1 react-search-autocomplete
+npm install multiselect-react-dropdown
 npm install react-filtered-multiselect 
 npm install react-js-pagination
 npm install react-loader-spinner --save
