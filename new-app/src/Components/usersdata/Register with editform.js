@@ -16,19 +16,22 @@ const Editform=(props)=>{
 
     
      useEffect(()=>{
+        
         const fetchPosts=async()=>{
             const res = await axios.get(`${url}/${props.match.params.id}`)
             setSelectedData(res.data);
             setUser(res.data["Full Name"])
             setCountry(res.data.Country)
             setEmail(res.data.Email)
+            setDate(res.data["Date of birth"].split('T')[0])
+            setTime(res.data["Date of birth"].split('T')[1].split('.')[0])
         }
         fetchPosts()
+        
     },[])  
 
     const renderSemail=(e)=>{
-        if ((/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i).test(e.target.value)) {
-          
+        if ((/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i).test(e.target.value)) { 
           setEmail(e.target.value)
           setErrorMessage('') 
          
@@ -38,33 +41,28 @@ const Editform=(props)=>{
       }
      
      
-      const renderName=(e)=>{
-          console.log(e.target.value)  
+      const renderName=(e)=>{ 
           setUser(e.target.value)  
            
       }
-      const renderCountry=(e)=>{
-          console.log(e.target.value)   
+      const renderCountry=(e)=>{  
           setCountry(e.target.value)       
       }
-      const renderDateOfBirth=(e)=>{ 
-          console.log(e.target.value)     
+      const renderDateOfBirth=(e)=>{      
           setDate(e.target.value)       
       }
-      const renderTime=(e)=>{  
-          console.log(e.target.value)    
+      const renderTime=(e)=>{     
           setTime(e.target.value)       
       }
   
   
       const submmiteditform=()=>{ 
-          console.log(user,email,country,date, time)
         if(user && email && country && date && time){
             axios.patch(`${url}/${props.match.params.id}`,{
                 
                     "Full Name": user,
                     "Country":country,
-                    "Date of birth": `${date}T${time}.000Z`,
+                    "Date of birth": `${date}T${time}Z`,
                     "Email": email,
                     "Created at":new Date().toISOString()
                
@@ -80,8 +78,27 @@ const Editform=(props)=>{
             setError('Fill all credentials') 
           } 
       }
-  
-        console.log(props)
+
+      const  submmitSignup=async()=>{ 
+        if(user && email && country && date && time){
+         const Id = 1+ +(localStorage.getItem("lastId"))
+            axios.post((url),{
+                "Full Name": user,
+              "Country":country,
+              "Id":Id ,
+              "Date of birth": `${date}T${time}.000Z`,
+              "Email": email,
+              "Created at":new Date().toISOString()
+            })
+    
+      props.history.push('/')
+      }
+                  
+          else{ 
+            setError('Fill all credentials') 
+          } 
+      }
+
     return (
         <React.Fragment>
               <div className="registration-form">
@@ -90,7 +107,7 @@ const Editform=(props)=>{
                 <span><i className="glyphicon glyphicon-user"></i></span>
             </div>
             <div className="form-group">
-            <label>Name:</label> <input type="text" className="form-data" defaultValue={selectedData["Full Name"]} onChange={renderName} id="username" />
+            <label>Name:</label> <input type="text" className="form-data" defaultValue={selectedData["Full Name"]} onChange={renderName} id="username" placeholder="name" />
                 
             </div>
             <div className="form-group">
@@ -101,8 +118,8 @@ const Editform=(props)=>{
                 <label>Date of Birth:</label>
                 <div className='row'>
                     
-                    <div className='col-md-6'><input type="date"  className="form-control item"  onChange={renderDateOfBirth} id="date" /></div>
-                    <div className='col-md-6'><input type="time" className="form-control item"  onChange={renderTime} id="time" /></div>
+                    <div className='col-md-6'><input type="date" defaultValue={date} className="form-control item"  onChange={renderDateOfBirth} id="date" /></div>
+                    <div className='col-md-6'><input type="time" defaultValue={time} className="form-control item"  onChange={renderTime} id="time" /></div>
                 </div>     
             </div>
           
@@ -115,7 +132,9 @@ const Editform=(props)=>{
           
            <div> <span className='error'>{error}</span></div>
             <div className="form-group">
-                <button type="button" className="btn btn-block create-account" onClick={submmiteditform} >Update</button>
+                {props.match.params.id !== ':id'?
+                <button type="button" className="btn btn-block create-account" onClick={submmiteditform} >Update</button>:
+                <button type="button" className="btn btn-block create-account" onClick={submmitSignup} >Register Here</button>}
             </div>
            
         </form>

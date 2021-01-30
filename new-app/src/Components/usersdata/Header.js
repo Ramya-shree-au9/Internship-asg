@@ -1,8 +1,7 @@
 import React from 'react'
 import {ReactSearchAutocomplete } from 'react-search-autocomplete'
-import {Link} from 'react-router-dom'
 
-const Header = ({posts,filter,alldata}) => {
+const Header = ({posts,filter,alldata,history}) => {
         const handleOnSelect = (item) => {
           let a = []
           a.push(item)
@@ -60,7 +59,9 @@ const Header = ({posts,filter,alldata}) => {
           }
         }
   
-
+    const registerrender=()=>{
+        history.push('/regiEdit/:id')
+    }
   return (
       <div>
     <div className='row header'>
@@ -83,17 +84,14 @@ const Header = ({posts,filter,alldata}) => {
                 items={alldata}
                 fuseOptions={{ keys: [ "Full Name","Country", "Date of birth", "Email","Created at"] }}           
                 resultStringKeyName="Full Name"
-                // onSearch={handleOnSearch}
                 onSelect={handleOnSelect}
-                // onFocus={handleOnFocus}
                 placeholder='Search by name'
                 autoFocus
               />          
             </div>
             </div>
-            <button className='col-md-2 main btn btn-success'><Link to='/register'>Register</Link></button>
-             
-              
+            <button className='col-md-2 main btn btn-success' onClick={registerrender}>Register</button>
+ 
               </center>
         </div>
        
